@@ -68,6 +68,10 @@ public class App {
 		
 		clientService.getAllClients();
 		clientService.getFicheClient(1);
+		
+		Commande newOrder = new Commande();
+		newOrder.setMontant(1000.00);
+		clientService.addCommandeToClient(1, newOrder);
 	}
 
 }

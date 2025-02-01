@@ -93,4 +93,21 @@ public class ClientDAO {
 
         return client;
     }
+    
+    /**
+     * Save or update a client (cascading will persist orders).
+     */
+    public void saveOrUpdateClient(Client client) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(client); // Merge handles both save & update
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+    }
 }

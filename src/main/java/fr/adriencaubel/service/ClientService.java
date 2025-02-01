@@ -4,6 +4,7 @@ package fr.adriencaubel.service;
 import java.util.List;
 
 import fr.adriencaubel.entity.Client;
+import fr.adriencaubel.entity.Commande;
 import fr.adriencaubel.repository.ClientDAO;
 
 public class ClientService {
@@ -31,5 +32,12 @@ public class ClientService {
     	System.out.println(client.getEmail() + " " + client.getNom());
     	System.out.println(client.getCommandes());
     	System.out.println(client.getFavoris());
+    }
+    
+    public void addCommandeToClient(int clientId, Commande commande) {
+        Client client = clientDAO.getClientWithDetailsEntityGraph(clientId); // Attention à récupérer Client et toutes ses associations
+
+        client.addCommande(commande); 
+        clientDAO.saveOrUpdateClient(client); // Persist client (cascade saves orders)
     }
 }
