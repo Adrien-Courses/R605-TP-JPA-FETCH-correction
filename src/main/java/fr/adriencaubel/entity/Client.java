@@ -1,7 +1,9 @@
 package fr.adriencaubel.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -9,9 +11,18 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@NamedEntityGraph(
+name = "Client.detail",
+    attributeNodes = {
+        @NamedAttributeNode("commandes"),
+        @NamedAttributeNode("favoris")
+    }
+)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +31,11 @@ public class Client {
     private String nom;
     private String email;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Ne charge pas automatiquement les commandes
-    private List<Commande> commandes = new ArrayList<>();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Ne charge pas automatiquement les commandes
+    private Set<Commande> commandes = new HashSet<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Ne charge pas automatiquement les favoris
-    private List<Article> favoris = new ArrayList<>();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Ne charge pas automatiquement les favoris
+    private Set<Article> favoris = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -50,7 +61,7 @@ public class Client {
 		this.email = email;
 	}
 
-	public List<Commande> getCommandes() {
+	public Set<Commande> getCommandes() {
 		return commandes;
 	}
 
@@ -59,7 +70,7 @@ public class Client {
 		this.commandes.add(commande);
 	}
 
-	public List<Article> getFavoris() {
+	public Set<Article> getFavoris() {
 		return favoris;
 	}   
 	

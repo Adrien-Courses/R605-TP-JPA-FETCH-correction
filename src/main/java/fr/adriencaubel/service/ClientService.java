@@ -27,7 +27,7 @@ public class ClientService {
     }
     
     public void getFicheClient(int clientId) {
-    	Client client = clientDAO.getClientById(clientId);
+    	Client client = clientDAO.getClientWithDetailsEntityGraph(clientId);
     	System.out.println(client.getEmail() + " " + client.getNom());
     	System.out.println(client.getCommandes());
     	System.out.println(client.getFavoris());
