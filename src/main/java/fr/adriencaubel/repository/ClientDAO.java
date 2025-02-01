@@ -22,4 +22,16 @@ public class ClientDAO {
         }
         return clients;
     }
+
+	public Client getClientById(int clientId) {
+    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("org.hibernate.tutorial.jpa");
+    	EntityManager entityManager = entityManagerFactory.createEntityManager();        
+    	Client client = null;
+        try {
+            client = entityManager.find(Client.class, clientId);
+        } finally {
+            entityManager.close();
+        }
+        return client;
+	}
 }

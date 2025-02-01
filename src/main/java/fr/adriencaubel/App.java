@@ -63,8 +63,11 @@ public class App {
 	public static void main(String[] args) {
 		//initDatabase(); // Décommenter MAIS NE LANCER QU'UNE SEULE FOIS l'initialisation
 
+		ClientDAO clientDAO = new ClientDAO();
+		ClientService clientService = new ClientService(clientDAO);
 		
-		//clientService.getAllClients();
+		clientService.getAllClients();
+		clientService.getFicheClient(1);
 	}
 
 }

@@ -20,10 +20,10 @@ public class Client {
     private String nom;
     private String email;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Ne charge pas automatiquement les commandes
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Ne charge pas automatiquement les commandes
     private List<Commande> commandes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Ne charge pas automatiquement les favoris
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Ne charge pas automatiquement les favoris
     private List<Article> favoris = new ArrayList<>();
 
 	public Long getId() {
